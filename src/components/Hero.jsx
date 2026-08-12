@@ -1,139 +1,134 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
-  Search, ShieldCheck, ArrowRight, CheckCircle2, Star, 
-  Users, Briefcase, Sparkles, Building, Layers
+  Search, ShieldCheck, CheckCircle2, ArrowRight, Sparkles, 
+  MapPin, Scale, Home, Utensils, Wifi, GraduationCap, HeartPulse, Handshake 
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import AskLawAndNeedModal from './AskLawAndNeedModal';
 
 export default function Hero() {
-  const { searchQuery, setSearchQuery, setCurrentPage } = useApp();
+  const { 
+    searchQuery, setSearchQuery, setCurrentPage, 
+    setSelectedCategory, categoriesList, language, setIsMediatorModalOpen 
+  } = useApp();
 
-  const quickSearchTags = [
-    "Tax Consultant",
-    "Legal Notice",
-    "Property Verification",
-    "Career Guidance",
-    "Digital Marketing",
-    "Passport Aid",
-    "Marketplace Products"
-  ];
+  const [isAskModalOpen, setIsAskModalOpen] = useState(false);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    setCurrentPage('services');
+    if (searchQuery.trim()) {
+      setCurrentPage('services');
+    }
   };
 
+  const quickPills = [
+    { label: language === 'hi' ? '⚖️ निःशुल्क कानून सलाह' : '⚖️ Free Legal Advice', icon: Scale },
+    { label: language === 'hi' ? '🏠 पीजी / हॉस्टल खोज' : '🏠 PG & Hostel Finder', icon: Home },
+    { label: language === 'hi' ? '🍲 टिफिन व भोजन सेवा' : '🍲 Tiffin & Food Service', icon: Utensils },
+    { label: language === 'hi' ? '📶 ब्रॉडबैंड इंटरनेट' : '📶 Fiber Broadband', icon: Wifi },
+    { label: language === 'hi' ? '📜 यूपी खतौनी / आय जाति' : '📜 UP Khatauni & Certificates', icon: ShieldCheck },
+    { label: language === 'hi' ? '🏦 KCC व मुद्रा लोन' : '🏦 KCC & MUDRA Loans', icon: Sparkles }
+  ];
+
   return (
-    <section className="relative pt-8 pb-16 overflow-hidden bg-gradient-to-b from-sky-50/50 via-slate-50 to-slate-50">
-      {/* Background Lighting Elements */}
-      <div className="bg-glow-blue top-0 left-1/4 opacity-70"></div>
-      <div className="bg-glow-gold top-20 right-10 opacity-50"></div>
+    <div className="relative overflow-hidden bg-gradient-to-b from-sky-900 via-sky-950 to-slate-950 text-white pt-8 pb-14 px-4 sm:px-6 lg:px-8 border-b border-sky-800/40">
+      
+      {/* Background Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-sky-500/10 blur-3xl pointer-events-none rounded-full" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-4xl mx-auto space-y-6">
-          
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-amber-300 shadow-sm">
-            <Sparkles className="w-4 h-4 text-amber-500 animate-pulse" />
-            <span className="text-xs font-extrabold text-slate-800">
-              India's Premier Multi-Vendor Service & Product Marketplace
-            </span>
-          </div>
-
-          {/* Master Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
-            One Platform. Multiple Solutions. <br className="hidden sm:inline" />
-            <span className="gradient-text">One Trusted Destination.</span>
-          </h1>
-
-          {/* Subheading */}
-          <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed font-medium">
-            Find trusted services, certified professionals, verified products and customized solutions for all your everyday business and personal needs — all in one place.
-          </p>
-
-          {/* Universal Hero Search Form */}
-          <form onSubmit={handleSearchSubmit} className="max-w-2xl mx-auto pt-2">
-            <div className="relative flex items-center p-2 rounded-2xl bg-white border border-slate-200 shadow-lg hover:border-sky-500 transition-all group">
-              <Search className="w-5 h-5 text-sky-600 ml-3 mr-2" />
-              <input
-                type="text"
-                placeholder="What service or solution are you looking for? (e.g. Tax, Legal, Property, IT)..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-transparent border-none text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-0 py-2.5 font-medium"
-              />
-              <button
-                type="submit"
-                className="px-6 py-3 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-xl text-xs sm:text-sm flex items-center gap-2 transition-all shadow-md shrink-0"
-              >
-                <span>Find a Solution</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Quick Search Chips */}
-            <div className="flex flex-wrap items-center justify-center gap-2 mt-4 text-xs">
-              <span className="text-slate-500 font-semibold">Popular Searches:</span>
-              {quickSearchTags.map((tag) => (
-                <button
-                  key={tag}
-                  type="button"
-                  onClick={() => {
-                    setSearchQuery(tag);
-                    setCurrentPage('services');
-                  }}
-                  className="px-3 py-1 bg-white hover:bg-sky-50 border border-slate-200 text-slate-700 hover:text-sky-700 rounded-xl font-medium transition-colors text-[11px] shadow-sm"
-                >
-                  {tag}
-                </button>
-              ))}
-            </div>
-          </form>
-
-          {/* Action CTAs */}
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
-            <button
-              onClick={() => setCurrentPage('services')}
-              className="px-7 py-3.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold rounded-xl text-sm flex items-center gap-2 shadow-lg shadow-amber-500/20 hover:scale-105 transition-all"
-            >
-              <Layers className="w-4 h-4 text-slate-950" />
-              <span>Explore 21+ Categories</span>
-            </button>
-
-            <button
-              onClick={() => setCurrentPage('onboarding')}
-              className="px-7 py-3.5 bg-white hover:bg-slate-100 border border-slate-300 text-slate-900 font-bold rounded-xl text-sm flex items-center gap-2 hover:border-emerald-500 transition-all shadow-sm"
-            >
-              <Briefcase className="w-4 h-4 text-emerald-600" />
-              <span>Join as a Service Provider</span>
-            </button>
-          </div>
-
-          {/* Live Trust Statistics Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-10 max-w-4xl mx-auto">
-            <div className="glass-panel p-4 rounded-2xl text-center border border-slate-200 bg-white">
-              <p className="text-2xl sm:text-3xl font-extrabold text-slate-900">50,000+</p>
-              <p className="text-xs text-slate-500 font-semibold mt-1">Happy Citizens Served</p>
-            </div>
-
-            <div className="glass-panel p-4 rounded-2xl text-center border border-slate-200 bg-white">
-              <p className="text-2xl sm:text-3xl font-extrabold text-amber-600">1,200+</p>
-              <p className="text-xs text-slate-500 font-semibold mt-1">Verified Experts</p>
-            </div>
-
-            <div className="glass-panel p-4 rounded-2xl text-center border border-slate-200 bg-white">
-              <p className="text-2xl sm:text-3xl font-extrabold text-sky-600">21+</p>
-              <p className="text-xs text-slate-500 font-semibold mt-1">Service Categories</p>
-            </div>
-
-            <div className="glass-panel p-4 rounded-2xl text-center border border-slate-200 bg-white">
-              <p className="text-2xl sm:text-3xl font-extrabold text-emerald-600">99.4%</p>
-              <p className="text-xs text-slate-500 font-semibold mt-1">Resolution Rate</p>
-            </div>
-          </div>
-
+      <div className="relative max-w-5xl mx-auto text-center space-y-6">
+        
+        {/* Top Government & Platform Trust Tag */}
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-900/80 border border-sky-600/60 shadow-inner">
+          <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+          <span className="text-xs font-extrabold text-sky-100">
+            {language === 'hi' 
+              ? 'भारत का भरोसेमंद सार्वजनिक नागरिक मदद केंद्र एवं मध्यस्थ हब' 
+              : "India's Trusted Public Citizen Concierge & Mediator Hub"}
+          </span>
         </div>
+
+        {/* Main Headline */}
+        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
+          {language === 'hi' ? (
+            <>
+              नागरिक सहायता, <span className="text-amber-400">कानूनी सलाह</span>, पीजी, टिफिन व <span className="text-sky-400">सरकारी सेवाएं</span>
+            </>
+          ) : (
+            <>
+              Citizen Help, <span className="text-amber-400">Legal Guidance</span>, PG, Tiffin & <span className="text-sky-400">Govt Services</span>
+            </>
+          )}
+        </h1>
+
+        {/* Subtitle */}
+        <p className="text-xs sm:text-base text-sky-100 max-w-3xl mx-auto font-medium leading-relaxed">
+          {language === 'hi'
+            ? 'पब्लिक मददगार आपके और वकील, डॉक्टर, हॉस्टल, कैटरर, जन सेवा केंद्र या व्यापारी के बीच सीधा भरोसेमंद मध्यस्थ (Mediator) है। कोई भी सवाल पूछें या सहायता प्राप्त करें।'
+            : 'Public Madadgar acts as your direct trusted mediator between citizens, advocates, doctors, hostels, caterers, and vendors. Ask any query or request instant help nationwide.'}
+        </p>
+
+        {/* Universal Search Box */}
+        <form onSubmit={handleSearchSubmit} className="max-w-2xl mx-auto">
+          <div className="relative flex items-center bg-white p-2 rounded-2xl shadow-2xl border border-slate-200">
+            <Search className="w-5 h-5 text-slate-400 absolute left-4 pointer-events-none" />
+            <input
+              type="text"
+              placeholder={
+                language === 'hi' 
+                  ? 'कानून सलाह, पीजी हॉस्टल, टिफिन, यूपी खतौनी, ITR, लोन या उत्पाद खोजें...' 
+                  : 'Search Legal advice, PG Hostel, Tiffin, UP Khatauni, ITR, Loans, Products...'
+              }
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-11 pr-32 py-3 bg-transparent text-xs sm:text-sm text-slate-900 placeholder-slate-400 font-bold focus:outline-none"
+            />
+            <button
+              type="submit"
+              className="absolute right-2 px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-xl text-xs sm:text-sm flex items-center gap-1 shadow transition-all hover:scale-105"
+            >
+              <span>{language === 'hi' ? 'खोजें' : 'Search'}</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </form>
+
+        {/* Quick Help Action Buttons */}
+        <div className="flex flex-wrap justify-center gap-2 pt-2">
+          {quickPills.map((pill, idx) => (
+            <button
+              key={idx}
+              onClick={() => setIsAskModalOpen(true)}
+              className="px-3.5 py-1.5 rounded-xl bg-sky-900/60 hover:bg-sky-800 text-sky-100 hover:text-white border border-sky-700/60 text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+            >
+              <span>{pill.label}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Action Banners Grid */}
+        <div className="pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-2xl mx-auto">
+          <button
+            onClick={() => setIsAskModalOpen(true)}
+            className="w-full p-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black rounded-2xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg transition-all hover:scale-102"
+          >
+            <Scale className="w-4 h-4 text-slate-950" />
+            <span>{language === 'hi' ? 'निःशुल्क कानून या दैनिक सेवा सवाल पूछें' : 'Ask Free Legal or Daily Need Query'}</span>
+          </button>
+
+          <button
+            onClick={() => setIsMediatorModalOpen(true)}
+            className="w-full p-3.5 bg-sky-600 hover:bg-sky-500 text-white font-black rounded-2xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg transition-all hover:scale-102 border border-sky-400/40"
+          >
+            <Handshake className="w-4 h-4 text-amber-300" />
+            <span>{language === 'hi' ? 'डॉक्टर/वकील/विक्रेता सीधा संपर्क' : 'Direct Mediator & Expert Match'}</span>
+          </button>
+        </div>
+
       </div>
-    </section>
+
+      {/* Ask Law & Need Modal Integration */}
+      <AskLawAndNeedModal isOpen={isAskModalOpen} onClose={() => setIsAskModalOpen(false)} />
+    </div>
   );
 }
