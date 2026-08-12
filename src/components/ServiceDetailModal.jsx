@@ -1,14 +1,14 @@
 import React from 'react';
 import { 
   X, CheckCircle2, Clock, MapPin, ShieldCheck, Star, 
-  ArrowRight, FileText, HelpCircle, PhoneCall, Sparkles 
+  ArrowRight, FileText, HelpCircle, PhoneCall, Sparkles, Handshake 
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 export default function ServiceDetailModal() {
   const { 
     selectedService, setSelectedService, 
-    setIsBookingModalOpen, language, providersList 
+    setIsBookingModalOpen, setIsMediatorModalOpen, language, providersList 
   } = useApp();
 
   if (!selectedService) return null;
@@ -21,6 +21,10 @@ export default function ServiceDetailModal() {
 
   const handleBookNow = () => {
     setIsBookingModalOpen(true);
+  };
+
+  const handleMediatorHelp = () => {
+    setIsMediatorModalOpen(true);
   };
 
   return (
@@ -107,27 +111,24 @@ export default function ServiceDetailModal() {
           </div>
         )}
 
-        {/* Service Execution Process Steps */}
-        <div className="space-y-2">
-          <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-            {language === 'hi' ? 'सेवा प्रक्रिया (Step-by-Step)' : 'Execution Process'}
-          </h3>
-          <div className="grid grid-cols-3 gap-2 text-center text-[10px] font-bold">
-            <div className="p-2 bg-slate-100 rounded-xl border border-slate-200">1. Submit Request</div>
-            <div className="p-2 bg-slate-100 rounded-xl border border-slate-200">2. Expert Connect</div>
-            <div className="p-2 bg-slate-100 rounded-xl border border-slate-200">3. Resolution Done</div>
-          </div>
-        </div>
+        {/* Action Buttons: Book vs Ask Mediator */}
+        <div className="grid grid-cols-2 gap-2 pt-2">
+          <button
+            onClick={handleMediatorHelp}
+            className="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-2xl text-xs flex items-center justify-center gap-1.5 shadow"
+          >
+            <Handshake className="w-4 h-4 text-slate-950" />
+            <span>{language === 'hi' ? 'मध्यस्थ सहायता (Call)' : 'Ask Mediator Help'}</span>
+          </button>
 
-        {/* Action Button */}
-        <button
-          onClick={handleBookNow}
-          className="w-full py-3 bg-sky-600 hover:bg-sky-700 text-white font-extrabold rounded-2xl text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md shadow-sky-600/20 transition-all"
-        >
-          <Sparkles className="w-4 h-4 text-amber-300" />
-          <span>{language === 'hi' ? 'अभी सेवा अनुरोध दर्ज करें' : 'Proceed to Request Service'}</span>
-          <ArrowRight className="w-4 h-4" />
-        </button>
+          <button
+            onClick={handleBookNow}
+            className="w-full py-3 bg-sky-600 hover:bg-sky-700 text-white font-black rounded-2xl text-xs flex items-center justify-center gap-1.5 shadow shadow-sky-600/20"
+          >
+            <Sparkles className="w-4 h-4 text-amber-300" />
+            <span>{language === 'hi' ? 'अनुरोध दर्ज करें' : 'Proceed to Request'}</span>
+          </button>
+        </div>
 
       </div>
     </div>
