@@ -49,6 +49,7 @@ export const AppProvider = ({ children }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isLegalModalOpen, setIsLegalModalOpen] = useState(false);
+  const [isMediatorModalOpen, setIsMediatorModalOpen] = useState(false);
 
   // Dynamic Stores
   const [categoriesList, setCategoriesList] = useState(CATEGORIES);
@@ -154,21 +155,18 @@ export const AppProvider = ({ children }) => {
     }
   };
 
-  // Switch role wrapper
   const handleRoleChange = (newRole) => {
     setRole(newRole);
     localStorage.setItem('pmc_role', newRole);
     showToast(`Active View Mode: ${newRole.toUpperCase()}`, 'info');
   };
 
-  // Switch Language Handler
   const handleLanguageChange = (newLang) => {
     setLanguage(newLang);
     localStorage.setItem('pmc_lang', newLang);
     showToast(newLang === 'hi' ? 'भाषा बदलकर हिंदी कर दी गई है!' : 'Language switched to English!', 'info');
   };
 
-  // User Login simulation
   const loginUser = (userData) => {
     setUser(userData);
     localStorage.setItem('pmc_user', JSON.stringify(userData));
@@ -181,7 +179,6 @@ export const AppProvider = ({ children }) => {
     showToast('Logged out successfully', 'info');
   };
 
-  // Cart operations
   const addToCart = (product) => {
     setCart((prev) => {
       const existing = prev.find((item) => item.id === product.id);
@@ -214,7 +211,6 @@ export const AppProvider = ({ children }) => {
     );
   };
 
-  // Wishlist toggle
   const toggleWishlist = (item) => {
     setWishlist((prev) => {
       const exists = prev.some((w) => w.id === item.id);
@@ -228,7 +224,6 @@ export const AppProvider = ({ children }) => {
     });
   };
 
-  // Submit new Service Request / Booking
   const submitServiceRequest = (bookingDetails) => {
     const newReq = {
       id: `req-${Date.now().toString().slice(-4)}`,
@@ -264,7 +259,6 @@ export const AppProvider = ({ children }) => {
     showToast('Your service request has been successfully submitted!', 'success');
   };
 
-  // Provider Onboarding Submission
   const submitProviderOnboarding = (formData) => {
     const newProviderApp = {
       id: `prov-pending-${Date.now().toString().slice(-4)}`,
@@ -284,7 +278,6 @@ export const AppProvider = ({ children }) => {
     showToast('Provider application submitted for Admin Verification!', 'success');
   };
 
-  // Admin Verification Toggle
   const approveProvider = (providerId) => {
     const app = pendingProviders.find((p) => p.id === providerId);
     if (app) {
@@ -371,6 +364,8 @@ export const AppProvider = ({ children }) => {
         setIsCheckoutOpen,
         isLegalModalOpen,
         setIsLegalModalOpen,
+        isMediatorModalOpen,
+        setIsMediatorModalOpen,
 
         categoriesList,
         servicesList,

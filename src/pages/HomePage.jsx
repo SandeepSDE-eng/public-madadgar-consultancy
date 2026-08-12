@@ -7,10 +7,10 @@ import HowItWorks from '../components/HowItWorks';
 import Testimonials from '../components/Testimonials';
 import FAQSection from '../components/FAQSection';
 import { useApp } from '../context/AppContext';
-import { Layers, ShieldCheck, ArrowRight, ShoppingBag, Briefcase, Sparkles } from 'lucide-react';
+import { Layers, ShieldCheck, ArrowRight, ShoppingBag, Briefcase, Sparkles, Handshake, HeartPulse, Scale, Building2 } from 'lucide-react';
 
 export default function HomePage() {
-  const { servicesList, providersList, setCurrentPage, language } = useApp();
+  const { servicesList, providersList, setCurrentPage, setIsMediatorModalOpen, language } = useApp();
 
   const featuredServices = servicesList.filter((s) => s.featured).slice(0, 4);
   const featuredProviders = providersList.slice(0, 3);
@@ -20,10 +20,42 @@ export default function HomePage() {
       {/* 1. Hero Section */}
       <Hero />
 
-      {/* 2. 21 Categories Grid */}
+      {/* 2. Public Citizen Mediator & Concierge Hub Banner */}
+      <section className="py-2 -mt-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-gradient-to-r from-sky-900 via-indigo-900 to-slate-900 p-6 rounded-3xl text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 border border-sky-700/60">
+            <div className="space-y-2 max-w-2xl">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-bold border border-amber-500/40">
+                <Handshake className="w-4 h-4 text-amber-400" />
+                {language === 'hi' ? 'सार्वजनिक नागरिक मध्यस्थता केंद्र (Public Mediator)' : 'Public Mediator & Direct Concierge Hub'}
+              </div>
+              <h2 className="text-xl sm:text-2xl font-black text-white leading-snug">
+                {language === 'hi'
+                  ? 'डॉक्टर/अस्पताल, तहसील/वकील या व्यापारी से सीधा संपर्क चाहिए?'
+                  : 'Need Direct Connection to Doctor/Hospital, Advocate/Tehsil or Vendor?'}
+              </h2>
+              <p className="text-xs sm:text-sm text-sky-100 font-medium leading-relaxed">
+                {language === 'hi'
+                  ? 'पब्लिक मददगार आपके लिए मध्यस्थ (Mediator) के रूप में कार्य करता है। अपनी आवश्यकता बताएं और हम आपको सीधे सही विशेषज्ञ या अस्पताल से जोड़ेंगे।'
+                  : 'Public Madadgar acts as your direct trusted mediator. Submit your requirement and we will connect you directly with the right expert, doctor or hospital.'}
+              </p>
+            </div>
+
+            <button
+              onClick={() => setIsMediatorModalOpen(true)}
+              className="px-6 py-3.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-2xl text-xs sm:text-sm flex items-center gap-2 shadow-xl hover:scale-105 transition-all shrink-0"
+            >
+              <Handshake className="w-4.5 h-4.5 text-slate-950" />
+              <span>{language === 'hi' ? 'सीधा संपर्क अनुरोध करें' : 'Connect Me Directly Now'}</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. 21 Categories Grid */}
       <CategoryGrid limit={12} />
 
-      {/* 3. Featured Services Section */}
+      {/* 4. Featured Services Section */}
       <section className="py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
@@ -53,7 +85,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 4. Verified Provider Spotlight */}
+      {/* 5. Verified Provider Spotlight */}
       <section className="py-10 bg-slate-100/70 border-y border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between mb-8">
@@ -83,10 +115,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 5. How It Works Timeline */}
+      {/* 6. How It Works Timeline */}
       <HowItWorks />
 
-      {/* 6. Product Marketplace Highlight Banner */}
+      {/* 7. Product Marketplace Highlight Banner */}
       <section className="py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white p-8 rounded-3xl border border-amber-300 shadow-md flex flex-col md:flex-row items-center justify-between gap-6">
@@ -118,11 +150,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 7. Testimonials & FAQs */}
+      {/* 8. Testimonials & FAQs */}
       <Testimonials />
       <FAQSection />
 
-      {/* 8. Join as Provider Banner CTA */}
+      {/* 9. Join as Provider Banner CTA */}
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gradient-to-r from-sky-900 via-indigo-900 to-slate-900 p-8 sm:p-12 rounded-3xl text-center space-y-4 max-w-4xl mx-auto shadow-2xl">

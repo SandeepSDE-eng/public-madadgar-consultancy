@@ -9,6 +9,8 @@ import CheckoutModal from './components/CheckoutModal';
 import BookingModal from './components/BookingModal';
 import ProviderProfileModal from './components/ProviderProfileModal';
 import ProductDetailModal from './components/ProductDetailModal';
+import ServiceDetailModal from './components/ServiceDetailModal';
+import MediatorConnectModal from './components/MediatorConnectModal';
 import LegalModal from './components/LegalModal';
 import LoginModal from './components/LoginModal';
 import MobileBottomNav from './components/MobileBottomNav';
@@ -70,6 +72,8 @@ export default function App() {
       <CartDrawer />
       <CheckoutModal />
       <BookingModal />
+      <ServiceDetailModal />
+      <MediatorConnectModal />
       <ProviderProfileModal />
       <ProductDetailModal />
       <LegalModal />

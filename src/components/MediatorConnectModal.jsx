@@ -1,0 +1,149 @@
+import React, { useState } from 'react';
+import { X, Handshake, CheckCircle2, Send, PhoneCall, Sparkles, Building2, UserCheck, HeartPulse } from 'lucide-react';
+import { useApp } from '../context/AppContext';
+
+export default function MediatorConnectModal() {
+  const { isMediatorModalOpen, setIsMediatorModalOpen, submitServiceRequest, showToast, language } = useApp();
+
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    connectType: 'doctor-hospital',
+    details: '',
+    city: 'New Delhi / UP'
+  });
+
+  const [submitted, setSubmitted] = useState(false);
+
+  if (!isMediatorModalOpen) return null;
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!formData.name || !formData.phone) return;
+
+    submitServiceRequest({
+      serviceName: `Mediator Concierge: ${formData.connectType}`,
+      providerName: 'Public Madadgar Direct Helpline Mediator',
+      price: 0,
+      category: 'Public Mediator Hub',
+      customerDetails: formData,
+      notes: formData.details
+    });
+
+    setSubmitted(true);
+    showToast(language === 'hi' ? 'मध्यस्थ सहायता अनुरोध जमा हो गया! हमारी टीम 15 मिनट में कॉल करेगी।' : 'Mediator match request submitted! Our concierge team will call in 15 mins.');
+    
+    setTimeout(() => {
+      setSubmitted(false);
+      setIsMediatorModalOpen(false);
+    }, 2000);
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-slate-900/70 backdrop-blur-md overflow-y-auto animate-fade-in">
+      <div className="relative w-full max-w-md bg-white border border-slate-200 rounded-3xl shadow-2xl overflow-hidden my-6 p-5 space-y-4">
+        
+        <button
+          onClick={() => setIsMediatorModalOpen(false)}
+          className="absolute top-4 right-4 p-1.5 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-600 transition-colors z-10"
+        >
+          <X className="w-5 h-5" />
+        </button>
+
+        <div className="space-y-1 pr-6">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 text-[10px] font-extrabold border border-amber-200">
+            <Handshake className="w-3.5 h-3.5" />
+            {language === 'hi' ? 'सार्वजनिक मध्यस्थता एवं डायरेक्ट कनेक्ट' : 'Public Citizen Mediator & Concierge'}
+          </div>
+          <h2 className="text-lg font-black text-slate-900 leading-snug">
+            {language === 'hi' ? 'नागरिक एवं विक्रेता सीधा संपर्क हब' : 'Connect Doctor, Advocate, Tehsil or Vendor'}
+          </h2>
+          <p className="text-xs text-slate-600 font-medium">
+            {language === 'hi'
+              ? 'पब्लिक मददगार आपके और डॉक्टर/अस्पताल, वकील/तहसील या व्यापारी के बीच सीधा सेतु बनता है।'
+              : 'Public Madadgar acts as your direct trusted mediator between patients, hospitals, advocates, and vendors.'}
+          </p>
+        </div>
+
+        {submitted ? (
+          <div className="py-8 text-center space-y-3">
+            <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto border border-emerald-300">
+              <CheckCircle2 className="w-8 h-8" />
+            </div>
+            <h3 className="text-base font-extrabold text-slate-900">
+              {language === 'hi' ? 'अनुरोध प्राप्त हुआ!' : 'Connection Request Received!'}
+            </h3>
+            <p className="text-xs text-slate-600 font-medium">
+              {language === 'hi' ? 'हमारी हेल्पलाइन टीम आपको सीधे संपर्क करवाकर मार्गदर्शन प्रदान करेगी।' : 'Our concierge team is connecting you right away.'}
+            </p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-3 text-xs">
+            <div>
+              <label className="block font-bold text-slate-700 mb-1">
+                {language === 'hi' ? 'कनेक्शन प्रकार चुनें *' : 'Select Connection Needed *'}
+              </label>
+              <select
+                value={formData.connectType}
+                onChange={(e) => setFormData({ ...formData, connectType: e.target.value })}
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-bold focus:border-sky-600 focus:outline-none"
+              >
+                <option value="doctor-hospital">{language === 'hi' ? '🏥 डॉक्टर एवं अस्पताल दाखिला सहायता' : '🏥 Doctor & Hospital Admission Aid'}</option>
+                <option value="tehsil-advocate">{language === 'hi' ? '⚖️ तहसील / हाईकोर्ट वकील संपर्क' : '⚖️ Tehsil / High Court Advocate Match'}</option>
+                <option value="govt-kendra">{language === 'hi' ? '🏛️ जन सेवा केंद्र / खतौनी सहायता' : '🏛️ Govt Kendra & Land Records Help'}</option>
+                <option value="vendor-business">{language === 'hi' ? '🤝 विक्रेता एवं स्थानीय ग्राहक व्यापार' : '🤝 Vendor & Customer Business Connect'}</option>
+              </select>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'आपका नाम *' : 'Your Name *'}</label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Ramesh Kumar"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold focus:border-sky-600 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'फ़ोन नंबर *' : 'Phone Number *'}</label>
+                <input
+                  type="tel"
+                  required
+                  placeholder="+91 98765 43210"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold focus:border-sky-600 focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'विवरण या समस्या *' : 'Explain Your Need *'}</label>
+              <textarea
+                rows="2"
+                required
+                placeholder={language === 'hi' ? 'अपनी आवश्यकता लिखें...' : 'Describe what help or connection you need...'}
+                value={formData.details}
+                onChange={(e) => setFormData({ ...formData, details: e.target.value })}
+                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold focus:border-sky-600 focus:outline-none"
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-xl text-xs flex items-center justify-center gap-2 shadow-md transition-all mt-2"
+            >
+              <Handshake className="w-4 h-4 text-slate-950" />
+              <span>{language === 'hi' ? 'सीधा संपर्क अनुरोध भेजें' : 'Connect Me Directly Now'}</span>
+            </button>
+          </form>
+        )}
+
+      </div>
+    </div>
+  );
+}
