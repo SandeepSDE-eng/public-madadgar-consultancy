@@ -191,7 +191,7 @@ export default function MediatorConnectModal() {
                   <img 
                     src="/assets/payment-qr.jpg" 
                     alt="Payment QR Code" 
-                    className="w-full h-full object-cover object-center scale-[1.35] origin-center" 
+                    className="w-full h-full object-cover object-[center_20%] scale-[1.6]" 
                   />
                 </div>
 
