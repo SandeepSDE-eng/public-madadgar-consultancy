@@ -221,12 +221,14 @@ export default function BookingModal() {
                 </p>
               </div>
 
-              <div className="mx-auto w-56 h-56 rounded-2xl border-2 border-slate-200 shadow-sm overflow-hidden bg-white flex items-center justify-center">
-                <img 
-                  src="/assets/payment-qr.jpg" 
-                  alt="Payment QR Code" 
-                  className="w-full h-full object-cover object-[center_20%] scale-[1.6]" 
-                />
+              <div className="p-2 border-2 border-slate-200 rounded-xl bg-white shadow-sm inline-block mx-auto">
+                <div className="w-56 h-56 overflow-hidden relative rounded-lg">
+                  <img 
+                    src="/assets/payment-qr.jpg" 
+                    alt="Payment QR Code" 
+                    className="absolute w-[135%] max-w-none h-auto top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[45%]" 
+                  />
+                </div>
               </div>
 
               <div className="w-full space-y-1">
