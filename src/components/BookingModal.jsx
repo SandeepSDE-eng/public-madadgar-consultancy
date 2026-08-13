@@ -166,13 +166,32 @@ export default function BookingModal() {
             </div>
           </div>
 
+          {/* Mediation Fee Lock */}
+          <div className="p-3 bg-amber-50 rounded-xl border border-amber-200">
+            <div className="flex items-start gap-2">
+              <ShieldCheck className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+              <div>
+                <p className="text-[11px] font-bold text-amber-900">
+                  {language === 'hi' 
+                    ? 'बुकिंग कन्फर्मेशन हेतु ₹149 का मध्यस्थता शुल्क अनिवार्य है।' 
+                    : 'A ₹149 mediation/booking fee is required to confirm this request.'}
+                </p>
+                <p className="text-[10px] text-amber-700 font-medium mt-0.5 leading-tight">
+                  {language === 'hi' 
+                    ? 'भुगतान के पश्चात ही प्रदाता का सीधा संपर्क साझा किया जाएगा। सेवा शुल्क का बाकी भुगतान कार्य पूर्ण होने पर करें।' 
+                    : 'Provider contact details will be shared immediately after this payment. The remaining service amount is settled during/after service completion.'}
+                </p>
+              </div>
+            </div>
+          </div>
+
           {/* Submit Button */}
           <button
             type="submit"
             className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-xl text-xs flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 transition-all mt-2"
           >
-            <Sparkles className="w-4 h-4 text-amber-300" />
-            <span>{language === 'hi' ? 'अनुरोध जमा करें' : 'Confirm Service Request'}</span>
+            <CreditCard className="w-4 h-4 text-amber-300" />
+            <span>{language === 'hi' ? '₹149 का भुगतान कर बुकिंग लॉक करें' : 'Pay ₹149 & Lock Booking'}</span>
           </button>
         </form>
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useApp } from './context/AppContext';
+import { MessageCircle } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -34,7 +35,7 @@ export default function App() {
   const { currentPage, isSidebarCollapsed } = useApp();
 
   return (
-    <div className="min-h-screen flex bg-slate-50 text-slate-800 font-sans selection:bg-sky-500 selection:text-white">
+    <div className="min-h-screen flex bg-slate-50 text-slate-800 font-sans selection:bg-sky-500 selection:text-white relative">
       {/* 1. Permanent / Responsive Left Sidebar */}
       <Sidebar />
 
@@ -65,6 +66,17 @@ export default function App() {
         {/* Footer */}
         <Footer />
       </div>
+
+      {/* Floating WhatsApp Button */}
+      <a 
+        href="https://wa.me/918604793347" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="fixed bottom-24 right-4 sm:bottom-6 sm:right-6 bg-emerald-500 hover:bg-emerald-600 text-white p-3.5 rounded-full shadow-[0_4px_20px_rgba(16,185,129,0.4)] transition-all hover:scale-110 z-50 flex items-center justify-center animate-bounce-slow"
+        aria-label="Contact us on WhatsApp"
+      >
+        <MessageCircle className="w-6 h-6 fill-emerald-500 text-white" />
+      </a>
 
       {/* Mobile App Bottom Tab Bar */}
       <MobileBottomNav />

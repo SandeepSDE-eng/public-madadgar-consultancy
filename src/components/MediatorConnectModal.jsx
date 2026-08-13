@@ -133,12 +133,31 @@ export default function MediatorConnectModal() {
               ></textarea>
             </div>
 
+            {/* Mediation Fee Lock */}
+            <div className="p-3 bg-amber-50 rounded-xl border border-amber-200">
+              <div className="flex items-start gap-2">
+                <Sparkles className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-[11px] font-bold text-amber-900">
+                    {language === 'hi' 
+                      ? 'विशेषज्ञ संपर्क हेतु ₹149 का मध्यस्थता शुल्क अनिवार्य है।' 
+                      : 'A ₹149 mediation fee is required to connect with experts.'}
+                  </p>
+                  <p className="text-[10px] text-amber-700 font-medium mt-0.5 leading-tight">
+                    {language === 'hi' 
+                      ? 'इस सुरक्षित शुल्क का भुगतान करने पर आपको तुरंत विशेषज्ञ का नंबर दे दिया जाएगा।' 
+                      : 'By paying this secure platform fee, you will instantly receive the direct contact details.'}
+                  </p>
+                </div>
+              </div>
+            </div>
+
             <button
               type="submit"
               className="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-xl text-xs flex items-center justify-center gap-2 shadow-md transition-all mt-2"
             >
               <Handshake className="w-4 h-4 text-slate-950" />
-              <span>{language === 'hi' ? 'सीधा संपर्क अनुरोध भेजें' : 'Connect Me Directly Now'}</span>
+              <span>{language === 'hi' ? '₹149 भरें और सीधा संपर्क प्राप्त करें' : 'Pay ₹149 & Connect Directly'}</span>
             </button>
           </form>
         )}

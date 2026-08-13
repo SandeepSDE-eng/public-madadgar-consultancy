@@ -7,59 +7,11 @@ export const CATEGORIES = [
     name_hi: "शिक्षा, कॉलेज प्रवेश एवं हॉस्टल",
     icon: "GraduationCap",
     color: "from-blue-500 to-indigo-600",
-    description: "College Admissions, Distance Degree, Exam Prep & Student Hostel Finders",
-    description_hi: "कॉलेज प्रवेश मार्गदर्शन, डिस्टेन्स एजुकेशन डिग्री, प्रतियोगी परीक्षा एवं हॉस्टल खोज",
-    subcategories: ["College Admission Guidance", "Distance Education Degree", "Hostel & PG Finder", "Study Abroad Assistance", "Scholarship Counseling"],
-    subcategories_hi: ["कॉलेज प्रवेश मार्गदर्शन", "डिस्टेंस एजुकेशन डिग्री", "हॉस्टल व पीजी खोज", "विदेश अध्ययन सहायता", "छात्रवृत्ति काउंसिलिंग"],
+    description: "College Admissions, Distance Degree, Exam Prep & Student Tutors",
+    description_hi: "कॉलेज प्रवेश मार्गदर्शन, डिस्टेन्स एजुकेशन डिग्री, प्रतियोगी परीक्षा एवं ट्यूटर",
+    subcategories: ["College Admission Guidance", "Distance Education Degree", "Tutor Finder", "Study Abroad Assistance", "Scholarship Counseling"],
+    subcategories_hi: ["कॉलेज प्रवेश मार्गदर्शन", "डिस्टेंस एजुकेशन डिग्री", "ट्यूटर खोज", "विदेश अध्ययन सहायता", "छात्रवृत्ति काउंसिलिंग"],
     featuredCount: 42
-  },
-  {
-    id: "cat-[22]",
-    name: "PG, Hostel & Rental Housing",
-    name_hi: "पीजी, हॉस्टल एवं किराए का मकान",
-    icon: "Home",
-    color: "from-amber-500 to-yellow-600",
-    description: "Boys/Girls PG, Working Professional Hostels, Rent Agreements & Tenant Verification",
-    description_hi: "छात्र व कामकाजी हेतु पीजी, हॉस्टल, स्टाम्प किरायानामा एवं किरायेदार सत्यापन",
-    subcategories: ["Boys/Girls PG Finder", "Rent Agreement & Lease", "Tenant Police Verification", "Flatmate Finder"],
-    subcategories_hi: ["लड़के/लड़कियों हेतु पीजी", "स्टाम्प रेंट एग्रीमेंट", "किरायेदार पुलिस वेरिफिकेशन", "फ़्लैट पार्टनर खोज"],
-    featuredCount: 48
-  },
-  {
-    id: "cat-[23]",
-    name: "Food, Tiffin & Catering",
-    name_hi: "खाना, टिफिन एवं कैटरिंग सेवाएं",
-    icon: "Utensils",
-    color: "from-orange-500 to-red-600",
-    description: "Daily Hygienic Tiffin Delivery, Event Catering & FSSAI Food Licenses",
-    description_hi: "दैनिक शुद्ध घरेलू टिफिन सेवा, शादी-पार्टी कैटरिंग बुकिंग एवं FSSAI फ़ूड लाइसेंस",
-    subcategories: ["Daily Home Tiffin Service", "Marriage & Party Catering", "FSSAI Food License", "Mess Booking"],
-    subcategories_hi: ["दैनिक घरेलू टिफिन सेवा", "शादी व पार्टी कैटरिंग", "FSSAI फ़ूड लाइसेंस", "मेस बुकिंग"],
-    featuredCount: 35
-  },
-  {
-    id: "cat-[24]",
-    name: "Telecom, Fiber & DTH",
-    name_hi: "दूरसंचार, ब्रॉडबैंड एवं सिम सेवाएं",
-    icon: "Wifi",
-    color: "from-sky-500 to-blue-600",
-    description: "Airtel/Jio Fiber Installation, Corporate Bulk SIM, DTH & Telecom Complaints",
-    description_hi: "हाई-स्पीड फाइबर ब्रॉडबैंड इंटरनेट कनेक्शन, कॉर्पोरेट सिम एवं डीटीएच सेवाएं",
-    subcategories: ["Fiber Broadband Connection", "Corporate Bulk SIM & Porting", "DTH & Cable Connection", "Telecom Complaint Guidance"],
-    subcategories_hi: ["फाइबर ब्रॉडबैंड इंटरनेट", "कॉर्पोरेट सिम पोर्टिंग", "DTH डीटीएच कनेक्शन", "दूरसंचार शिकायत मार्गदर्शन"],
-    featuredCount: 31
-  },
-  {
-    id: "cat-11",
-    name: "Legal Advisory & Lawyer Match",
-    name_hi: "कानूनी सलाह एवं वकील संपर्क",
-    icon: "Scale",
-    color: "from-slate-700 to-zinc-900",
-    description: "Free Basic Law Guidance, High Court Advocate Match, FIR/Bail & Notices",
-    description_hi: "निःशुल्क प्राथमिक कानूनी परामर्श, हाईकोर्ट वकील मेल, एफआईआर, जमानत व लीगल नोटिस",
-    subcategories: ["Free Basic Law Consultation", "High Court Advocate Match", "Legal Notice Drafting", "FIR & Bail Assistance", "Cyber Crime Complaint"],
-    subcategories_hi: ["निःशुल्क कानूनी परामर्श", "हाईकोर्ट वकील संपर्क", "लीगल नोटिस ड्राफ्टिंग", "एफआईआर व जमानत सहायता", "साइबर क्राइम शिकायत"],
-    featuredCount: 68
   },
   {
     id: "cat-2",
@@ -67,8 +19,8 @@ export const CATEGORIES = [
     name_hi: "स्वास्थ्य, डॉक्टर एवं अस्पताल",
     icon: "HeartPulse",
     color: "from-emerald-500 to-teal-600",
-    description: "Doctor Consultation, Hospital Admission Aid, Diagnostic Booking & Ayush",
-    description_hi: "डॉक्टर परामर्श, अस्पताल दाखिला सहायता, पैथोलॉजी लैब टेस्ट बुकिंग एवं आयुष्मान",
+    description: "Doctor Consultation, Hospital Admission Aid, Diagnostic Booking & Lab",
+    description_hi: "डॉक्टर परामर्श, अस्पताल दाखिला सहायता, पैथोलॉजी लैब टेस्ट बुकिंग एवं आयुष",
     subcategories: ["Hospital Admission Aid", "Online Doctor Consult", "Lab Test At Home", "Medical Insurance Claim"],
     subcategories_hi: ["अस्पताल दाखिला सहायता", "ऑनलाइन डॉक्टर परामर्श", "घर पर लैब टेस्ट", "मेडिकल इंश्योरेंस क्लेम"],
     featuredCount: 38
@@ -86,33 +38,9 @@ export const CATEGORIES = [
     featuredCount: 55
   },
   {
-    id: "cat-4",
-    name: "Career Guidance",
-    name_hi: "करियर मार्गदर्शन",
-    icon: "Compass",
-    color: "from-violet-500 to-purple-600",
-    description: "Career Psychometric Tests, Stream Selection & Skill Development Planning",
-    description_hi: "करियर परीक्षण, कक्षा 10-12 विषय चयन और कौशल विकास योजना",
-    subcategories: ["Class 10-12 Stream Selection", "Career Transition Counseling", "Skill Gap Analysis"],
-    subcategories_hi: ["कक्षा 10-12 विषय चयन", "करियर परिवर्तन काउंसिलिंग", "कौशल विश्लेषण"],
-    featuredCount: 29
-  },
-  {
-    id: "cat-5",
-    name: "Business Consultancy",
-    name_hi: "व्यापार एवं उद्योग परामर्श",
-    icon: "Building2",
-    color: "from-cyan-500 to-blue-600",
-    description: "Startup Registration, MSME Setup, Business Plan & Growth Strategy",
-    description_hi: "कंपनी पंजीकरण, एमएसएमई / उद्यम सेटअप, बिजनेस प्लान और ट्रेडमार्क",
-    subcategories: ["Company Registration (Private Ltd/LLP)", "MSME/Udyam Registration", "ISO Certification", "Trademark Registration"],
-    subcategories_hi: ["प्राइवेट लिमिटेड कंपनी पंजीकरण", "एमएसएमई / उद्यम पंजीकरण", "आईएसओ प्रमाणन", "ट्रेडमार्क रजिस्ट्रेशन"],
-    featuredCount: 64
-  },
-  {
     id: "cat-6",
     name: "Tax & Accounting",
-    name_hi: "टैक्स एवं अकाउंटिंग सेवाएं",
+    name_hi: "टैक्स (GST) एवं अकाउंटिंग सेवाएं",
     icon: "Calculator",
     color: "from-green-500 to-emerald-600",
     description: "GST Filing, Income Tax Returns (ITR), Bookkeeping & Audit",
@@ -120,18 +48,6 @@ export const CATEGORIES = [
     subcategories: ["Income Tax Return (ITR-1 to ITR-7)", "GST Registration & Monthly Filing", "CA Certification & Audit"],
     subcategories_hi: ["इनकम टैक्स रिटर्न (ITR)", "जीएसटी रजिस्ट्रेशन व रिटर्न", "सीए ऑडिट व सर्टिफिकेट"],
     featuredCount: 78
-  },
-  {
-    id: "cat-7",
-    name: "Digital Marketing",
-    name_hi: "डिजिटल मार्केटिंग व ब्रांडिंग",
-    icon: "Megaphone",
-    color: "from-rose-500 to-pink-600",
-    description: "SEO, Meta & Google Ads, Social Media Management & Branding",
-    description_hi: "एसईओ, फेसबुक व गूगल लीड विज्ञापन, सोशल मीडिया और बिजनेस ब्रांडिंग",
-    subcategories: ["SEO Optimization", "Facebook & Instagram Lead Ads", "Google Ads Management"],
-    subcategories_hi: ["एसईओ (Google SEO)", "फेसबुक/इंस्टाग्राम विज्ञापन", "गूगल एड्स"],
-    featuredCount: 45
   },
   {
     id: "cat-10",
@@ -144,6 +60,54 @@ export const CATEGORIES = [
     subcategories: ["Land Title Verification", "Property Registry & Mutation", "Rent Agreement"],
     subcategories_hi: ["जमीन / मकान सत्यापन", "रजिस्ट्री व दाखिल-खारिज (Mutation)", "रेंट एग्रीमेंट"],
     featuredCount: 52
+  },
+  {
+    id: "cat-donation",
+    name: "Donation & Charity",
+    name_hi: "दान, एनजीओ एवं ट्रस्ट",
+    icon: "Heart",
+    color: "from-rose-500 to-red-600",
+    description: "Support NGO, Trust, School, Madarsa & other charitable organizations",
+    description_hi: "एनजीओ, ट्रस्ट, स्कूल, मदरसा व अन्य धर्मार्थ संगठनों को दान व सहायता",
+    subcategories: ["NGO Support", "School/Madarsa Donation", "Trust Funding", "Food Drive"],
+    subcategories_hi: ["एनजीओ सहयोग", "स्कूल / मदरसा दान", "ट्रस्ट फंडिंग", "अन्न दान"],
+    featuredCount: 15
+  },
+  {
+    id: "cat-11",
+    name: "Legal Advisory & Lawyer Match",
+    name_hi: "कानूनी सलाह एवं वकील संपर्क",
+    icon: "Scale",
+    color: "from-slate-700 to-zinc-900",
+    description: "Free Basic Law Guidance, High Court Advocate Match, FIR/Bail & Notices",
+    description_hi: "निःशुल्क प्राथमिक कानूनी परामर्श, हाईकोर्ट वकील मेल, एफआईआर, जमानत व लीगल नोटिस",
+    subcategories: ["Free Basic Law Consultation", "High Court Advocate Match", "Legal Notice Drafting", "FIR & Bail Assistance", "Cyber Crime Complaint"],
+    subcategories_hi: ["निःशुल्क कानूनी परामर्श", "हाईकोर्ट वकील संपर्क", "लीगल नोटिस ड्राफ्टिंग", "एफआईआर व जमानत सहायता", "साइबर क्राइम शिकायत"],
+    featuredCount: 68
+  },
+  {
+    id: "cat-7",
+    name: "Digital Marketing & Websites",
+    name_hi: "डिजिटल मार्केटिंग व वेबसाइट निर्माण",
+    icon: "Megaphone",
+    color: "from-fuchsia-500 to-purple-600",
+    description: "Website Making, SEO, Meta & Google Ads, Social Media Management & Branding",
+    description_hi: "वेबसाइट निर्माण, एसईओ, फेसबुक व गूगल विज्ञापन, सोशल मीडिया और बिजनेस ब्रांडिंग",
+    subcategories: ["Website Development", "SEO Optimization", "Facebook & Instagram Ads", "Google Ads"],
+    subcategories_hi: ["वेबसाइट डेवलपमेंट", "एसईओ (Google SEO)", "फेसबुक/इंस्टाग्राम विज्ञापन", "गूगल एड्स"],
+    featuredCount: 45
+  },
+  {
+    id: "cat-5",
+    name: "Business Consultancy",
+    name_hi: "व्यापार एवं उद्योग परामर्श",
+    icon: "Building2",
+    color: "from-cyan-500 to-blue-600",
+    description: "Startup Registration, MSME Setup, Business Plan & Growth Strategy",
+    description_hi: "कंपनी पंजीकरण, एमएसएमई / उद्यम सेटअप, बिजनेस प्लान और ट्रेडमार्क",
+    subcategories: ["Company Registration (Private Ltd/LLP)", "MSME/Udyam Registration", "ISO Certification", "Trademark Registration"],
+    subcategories_hi: ["प्राइवेट लिमिटेड कंपनी पंजीकरण", "एमएसएमई / उद्यम पंजीकरण", "आईएसओ प्रमाणन", "ट्रेडमार्क रजिस्ट्रेशन"],
+    featuredCount: 64
   },
   {
     id: "cat-12",
@@ -170,6 +134,54 @@ export const CATEGORIES = [
     featuredCount: 92
   },
   {
+    id: "cat-[23]",
+    name: "Food, Tiffin & Catering",
+    name_hi: "खाना, टिफिन एवं कैटरिंग सेवाएं",
+    icon: "Utensils",
+    color: "from-orange-500 to-red-600",
+    description: "Daily Hygienic Tiffin Delivery, Event Catering & FSSAI Food Licenses",
+    description_hi: "दैनिक शुद्ध घरेलू टिफिन सेवा, शादी-पार्टी कैटरिंग बुकिंग एवं FSSAI फ़ूड लाइसेंस",
+    subcategories: ["Daily Home Tiffin Service", "Marriage & Party Catering", "FSSAI Food License", "Mess Booking"],
+    subcategories_hi: ["दैनिक घरेलू टिफिन सेवा", "शादी व पार्टी कैटरिंग", "FSSAI फ़ूड लाइसेंस", "मेस बुकिंग"],
+    featuredCount: 35
+  },
+  {
+    id: "cat-[22]",
+    name: "PG, Hostel & Rental Housing",
+    name_hi: "पीजी, हॉस्टल एवं किराए का मकान",
+    icon: "Home",
+    color: "from-amber-500 to-yellow-600",
+    description: "Boys/Girls PG, Working Professional Hostels, Rent Agreements & Tenant Verification",
+    description_hi: "छात्र व कामकाजी हेतु पीजी, हॉस्टल, स्टाम्प किरायानामा एवं किरायेदार सत्यापन",
+    subcategories: ["Boys/Girls PG Finder", "Rent Agreement & Lease", "Tenant Police Verification", "Flatmate Finder"],
+    subcategories_hi: ["लड़के/लड़कियों हेतु पीजी", "स्टाम्प रेंट एग्रीमेंट", "किरायेदार पुलिस वेरिफिकेशन", "फ़्लैट पार्टनर खोज"],
+    featuredCount: 48
+  },
+  {
+    id: "cat-travel",
+    name: "Tour, Travel & Transport",
+    name_hi: "टूर, ट्रेवल एवं ट्रांसपोर्ट",
+    icon: "MapPin",
+    color: "from-sky-500 to-blue-600",
+    description: "Cab booking, Transport Services, Tour Packages & Pilgrimage Booking",
+    description_hi: "कैब बुकिंग, ट्रांसपोर्ट सेवाएं, टूर पैकेज एवं तीर्थयात्रा बुकिंग",
+    subcategories: ["Cab & Taxi Booking", "Transport Goods", "Holiday Packages", "Pilgrimage Tours"],
+    subcategories_hi: ["कैब एवं टैक्सी बुकिंग", "माल ट्रांसपोर्ट", "हॉलिडे पैकेज", "तीर्थयात्रा टूर"],
+    featuredCount: 22
+  },
+  {
+    id: "cat-[24]",
+    name: "Telecom, Fiber & DTH",
+    name_hi: "दूरसंचार, ब्रॉडबैंड एवं सिम सेवाएं",
+    icon: "Wifi",
+    color: "from-sky-500 to-blue-600",
+    description: "Airtel/Jio Fiber Installation, Corporate Bulk SIM, DTH & Telecom Complaints",
+    description_hi: "हाई-स्पीड फाइबर ब्रॉडबैंड इंटरनेट कनेक्शन, कॉर्पोरेट सिम एवं डीटीएच सेवाएं",
+    subcategories: ["Fiber Broadband Connection", "Corporate Bulk SIM & Porting", "DTH & Cable Connection", "Telecom Complaint Guidance"],
+    subcategories_hi: ["फाइबर ब्रॉडबैंड इंटरनेट", "कॉर्पोरेट सिम पोर्टिंग", "DTH डीटीएच कनेक्शन", "दूरसंचार शिकायत मार्गदर्शन"],
+    featuredCount: 31
+  },
+  {
     id: "cat-20",
     name: "Online Shopping (Marketplace)",
     name_hi: "ऑनलाइन बाज़ार (मार्केटप्लेस)",
@@ -180,6 +192,18 @@ export const CATEGORIES = [
     subcategories: ["Biometric & POS Devices", "Class 3 DSC USB Tokens", "Taxation Books"],
     subcategories_hi: ["बायोमेट्रिक व पीओएस मशीन", "क्लास 3 डीएससी (DSC) टोकन", "टैक्स पुस्तकें"],
     featuredCount: 120
+  },
+  {
+    id: "cat-other",
+    name: "Other Services",
+    name_hi: "अन्य सेवाएं",
+    icon: "Layers",
+    color: "from-slate-500 to-gray-600",
+    description: "Any other miscellaneous services not listed above",
+    description_hi: "ऊपर सूचीबद्ध नहीं की गई कोई अन्य विविध सेवाएं",
+    subcategories: ["Miscellaneous", "Custom Request"],
+    subcategories_hi: ["विविध सेवाएं", "कस्टम अनुरोध"],
+    featuredCount: 10
   }
 ];
 
