@@ -11,6 +11,9 @@ export default function BookingModal() {
     setIsBookingModalOpen, submitServiceRequest, language 
   } = useApp();
 
+  const [paymentStep, setPaymentStep] = useState(false);
+  const [utrNumber, setUtrNumber] = useState('');
+
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -37,17 +40,29 @@ export default function BookingModal() {
     e.preventDefault();
     if (!formData.name || !formData.phone) return;
 
+    if (!paymentStep) {
+      setPaymentStep(true);
+      return;
+    }
+
+    if (!utrNumber || utrNumber.length < 12) {
+      alert(language === 'hi' ? 'कृपया 12 अंकों का UTR नंबर दर्ज करें।' : 'Please enter a valid 12-digit UTR/Transaction ID.');
+      return;
+    }
+
     submitServiceRequest({
       serviceName: selectedService.name,
       providerName: selectedProvider ? selectedProvider.businessName : 'Assigned Expert Provider',
       providerId: selectedProvider ? selectedProvider.id : 'prov-1',
       price: selectedService.price,
       category: selectedService.category || 'General Service',
-      customerDetails: formData,
+      customerDetails: { ...formData, utrNumber },
       notes: formData.notes
     });
 
     setIsBookingModalOpen(false);
+    setPaymentStep(false);
+    setUtrNumber('');
   };
 
   return (
@@ -78,121 +93,170 @@ export default function BookingModal() {
 
         {/* Compact Form Body */}
         <form onSubmit={handleSubmit} className="p-4 space-y-3 text-xs">
-          
-          <div className="grid grid-cols-2 gap-2">
-            <div>
-              <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'नाम *' : 'Full Name *'}</label>
-              <input
-                type="text"
-                required
-                placeholder="Ramesh Kumar"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:border-sky-600 focus:outline-none font-medium"
-              />
-            </div>
+          {!paymentStep ? (
+            <>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'नाम *' : 'Full Name *'}</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Ramesh Kumar"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:border-sky-600 focus:outline-none font-medium"
+                  />
+                </div>
 
-            <div>
-              <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'मोबाइल *' : 'Mobile Number *'}</label>
-              <input
-                type="tel"
-                required
-                placeholder="+91 98765 43210"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:border-sky-600 focus:outline-none font-medium"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2">
-            <div>
-              <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'शहर / जिला' : 'City / District'}</label>
-              <input
-                type="text"
-                value={formData.city}
-                onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:border-sky-600 focus:outline-none font-medium"
-              />
-            </div>
-            <div>
-              <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'पिन कोड' : 'PIN Code'}</label>
-              <input
-                type="text"
-                value={formData.pincode}
-                onChange={(e) => setFormData({ ...formData, pincode: e.target.value })}
-                className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:border-sky-600 focus:outline-none font-medium"
-              />
-            </div>
-          </div>
-
-          {/* Date & Time */}
-          <div className="grid grid-cols-2 gap-2">
-            <div>
-              <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'पसंदीदा तिथि' : 'Preferred Date'}</label>
-              <input
-                type="date"
-                value={formData.date}
-                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:border-sky-600 focus:outline-none font-medium"
-              />
-            </div>
-
-            <div>
-              <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'समय स्लॉट' : 'Time Slot'}</label>
-              <select
-                value={formData.slot}
-                onChange={(e) => setFormData({ ...formData, slot: e.target.value })}
-                className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:border-sky-600 focus:outline-none font-medium"
-              >
-                <option>09:00 AM - 12:00 PM</option>
-                <option>12:00 PM - 03:00 PM</option>
-                <option>03:00 PM - 06:00 PM</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Upload Documents (Compact) */}
-          <div>
-            <label className="block font-bold text-slate-700 mb-1">
-              {language === 'hi' ? 'संलग्न दस्तावेज़ (ऐच्छिक)' : 'Attach Documents (Optional)'}
-            </label>
-            <div className="relative border border-dashed border-slate-300 hover:border-sky-500 rounded-xl p-2 text-center bg-slate-50 cursor-pointer">
-              <input type="file" onChange={handleDocUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
-              <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-600 font-medium">
-                <Upload className="w-3.5 h-3.5 text-sky-600" />
-                <span className="truncate">{uploadedDocName ? `Attached: ${uploadedDocName}` : 'Attach file (PDF/JPG)'}</span>
+                <div>
+                  <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'मोबाइल *' : 'Mobile Number *'}</label>
+                  <input
+                    type="tel"
+                    required
+                    placeholder="+91 98765 43210"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:border-sky-600 focus:outline-none font-medium"
+                  />
+                </div>
               </div>
-            </div>
-          </div>
 
-          {/* Mediation Fee Lock */}
-          <div className="p-3 bg-amber-50 rounded-xl border border-amber-200">
-            <div className="flex items-start gap-2">
-              <ShieldCheck className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'शहर / जिला' : 'City / District'}</label>
+                  <input
+                    type="text"
+                    value={formData.city}
+                    onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                    className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:border-sky-600 focus:outline-none font-medium"
+                  />
+                </div>
+                <div>
+                  <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'पिन कोड' : 'PIN Code'}</label>
+                  <input
+                    type="text"
+                    value={formData.pincode}
+                    onChange={(e) => setFormData({ ...formData, pincode: e.target.value })}
+                    className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:border-sky-600 focus:outline-none font-medium"
+                  />
+                </div>
+              </div>
+
+              {/* Date & Time */}
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'पसंदीदा तिथि' : 'Preferred Date'}</label>
+                  <input
+                    type="date"
+                    value={formData.date}
+                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                    className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:border-sky-600 focus:outline-none font-medium"
+                  />
+                </div>
+
+                <div>
+                  <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'समय स्लॉट' : 'Time Slot'}</label>
+                  <select
+                    value={formData.slot}
+                    onChange={(e) => setFormData({ ...formData, slot: e.target.value })}
+                    className="w-full px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:border-sky-600 focus:outline-none font-medium"
+                  >
+                    <option>09:00 AM - 12:00 PM</option>
+                    <option>12:00 PM - 03:00 PM</option>
+                    <option>03:00 PM - 06:00 PM</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Upload Documents (Compact) */}
               <div>
-                <p className="text-[11px] font-bold text-amber-900">
-                  {language === 'hi' 
-                    ? 'बुकिंग कन्फर्मेशन हेतु ₹149 का मध्यस्थता शुल्क अनिवार्य है।' 
-                    : 'A ₹149 mediation/booking fee is required to confirm this request.'}
-                </p>
-                <p className="text-[10px] text-amber-700 font-medium mt-0.5 leading-tight">
-                  {language === 'hi' 
-                    ? 'भुगतान के पश्चात ही प्रदाता का सीधा संपर्क साझा किया जाएगा। सेवा शुल्क का बाकी भुगतान कार्य पूर्ण होने पर करें।' 
-                    : 'Provider contact details will be shared immediately after this payment. The remaining service amount is settled during/after service completion.'}
+                <label className="block font-bold text-slate-700 mb-1">
+                  {language === 'hi' ? 'संलग्न दस्तावेज़ (ऐच्छिक)' : 'Attach Documents (Optional)'}
+                </label>
+                <div className="relative border border-dashed border-slate-300 hover:border-sky-500 rounded-xl p-2 text-center bg-slate-50 cursor-pointer">
+                  <input type="file" onChange={handleDocUpload} className="absolute inset-0 opacity-0 cursor-pointer" />
+                  <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-600 font-medium">
+                    <Upload className="w-3.5 h-3.5 text-sky-600" />
+                    <span className="truncate">{uploadedDocName ? `Attached: ${uploadedDocName}` : 'Attach file (PDF/JPG)'}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Mediation Fee Lock */}
+              <div className="p-3 bg-amber-50 rounded-xl border border-amber-200">
+                <div className="flex items-start gap-2">
+                  <ShieldCheck className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                  <div>
+                    <p className="text-[11px] font-bold text-amber-900">
+                      {language === 'hi' 
+                        ? 'बुकिंग कन्फर्मेशन हेतु ₹149 का मध्यस्थता शुल्क अनिवार्य है।' 
+                        : 'A ₹149 mediation/booking fee is required to confirm this request.'}
+                    </p>
+                    <p className="text-[10px] text-amber-700 font-medium mt-0.5 leading-tight">
+                      {language === 'hi' 
+                        ? 'भुगतान के पश्चात ही प्रदाता का सीधा संपर्क साझा किया जाएगा। सेवा शुल्क का बाकी भुगतान कार्य पूर्ण होने पर करें।' 
+                        : 'Provider contact details will be shared immediately after this payment. The remaining service amount is settled during/after service completion.'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-xl text-xs flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 transition-all mt-2"
+              >
+                <CreditCard className="w-4 h-4 text-amber-300" />
+                <span>{language === 'hi' ? '₹149 का भुगतान कर बुकिंग लॉक करें' : 'Pay ₹149 & Lock Booking'}</span>
+              </button>
+            </>
+          ) : (
+            <div className="flex flex-col items-center justify-center space-y-4 py-2">
+              <div className="text-center">
+                <h3 className="text-sm font-bold text-slate-800">
+                  {language === 'hi' ? 'पेमेंट स्कैन करें' : 'Scan to Pay'}
+                </h3>
+                <p className="text-xs text-slate-500 mt-1">
+                  {language === 'hi' ? 'QR कोड स्कैन करके ₹149 का भुगतान करें।' : 'Scan the QR code and pay exactly ₹149.'}
                 </p>
               </div>
-            </div>
-          </div>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-xl text-xs flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 transition-all mt-2"
-          >
-            <CreditCard className="w-4 h-4 text-amber-300" />
-            <span>{language === 'hi' ? '₹149 का भुगतान कर बुकिंग लॉक करें' : 'Pay ₹149 & Lock Booking'}</span>
-          </button>
+              <div className="p-2 border-2 border-slate-200 rounded-xl bg-slate-50">
+                <img src="/assets/payment-qr.jpg" alt="Payment QR Code" className="w-48 h-48 object-contain rounded-lg shadow-sm" />
+              </div>
+
+              <div className="w-full space-y-1">
+                <label className="block font-bold text-slate-700">
+                  {language === 'hi' ? 'UTR / Transaction ID दर्ज करें *' : 'Enter UTR / Transaction ID *'}
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g., 315482390123"
+                  value={utrNumber}
+                  onChange={(e) => setUtrNumber(e.target.value)}
+                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:border-sky-600 focus:outline-none font-medium"
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={utrNumber.length < 12}
+                className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400 text-white font-extrabold rounded-xl text-xs flex items-center justify-center gap-2 shadow-md transition-all mt-2"
+              >
+                <CheckCircle2 className="w-4 h-4" />
+                <span>{language === 'hi' ? 'भुगतान विवरण जमा करें' : 'Submit Payment Details'}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setPaymentStep(false)}
+                className="text-xs text-slate-500 hover:text-slate-800 underline mt-2"
+              >
+                {language === 'hi' ? 'वापस जाएं' : 'Go Back'}
+              </button>
+            </div>
+          )}
         </form>
 
       </div>

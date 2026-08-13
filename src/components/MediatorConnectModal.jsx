@@ -13,6 +13,8 @@ export default function MediatorConnectModal() {
     city: 'New Delhi / UP'
   });
 
+  const [paymentStep, setPaymentStep] = useState(false);
+  const [utrNumber, setUtrNumber] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
   if (!isMediatorModalOpen) return null;
@@ -21,12 +23,22 @@ export default function MediatorConnectModal() {
     e.preventDefault();
     if (!formData.name || !formData.phone) return;
 
+    if (!paymentStep) {
+      setPaymentStep(true);
+      return;
+    }
+
+    if (!utrNumber || utrNumber.length < 12) {
+      alert(language === 'hi' ? 'कृपया 12 अंकों का UTR नंबर दर्ज करें।' : 'Please enter a valid 12-digit UTR/Transaction ID.');
+      return;
+    }
+
     submitServiceRequest({
       serviceName: `Mediator Concierge: ${formData.connectType}`,
       providerName: 'Public Madadgar Direct Helpline Mediator',
       price: 0,
       category: 'Public Mediator Hub',
-      customerDetails: formData,
+      customerDetails: { ...formData, utrNumber },
       notes: formData.details
     });
 
@@ -35,6 +47,8 @@ export default function MediatorConnectModal() {
     
     setTimeout(() => {
       setSubmitted(false);
+      setPaymentStep(false);
+      setUtrNumber('');
       setIsMediatorModalOpen(false);
     }, 2000);
   };
@@ -79,86 +93,136 @@ export default function MediatorConnectModal() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-3 text-xs">
-            <div>
-              <label className="block font-bold text-slate-700 mb-1">
-                {language === 'hi' ? 'कनेक्शन प्रकार चुनें *' : 'Select Connection Needed *'}
-              </label>
-              <select
-                value={formData.connectType}
-                onChange={(e) => setFormData({ ...formData, connectType: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-bold focus:border-sky-600 focus:outline-none"
-              >
-                <option value="doctor-hospital">{language === 'hi' ? '🏥 डॉक्टर एवं अस्पताल दाखिला सहायता' : '🏥 Doctor & Hospital Admission Aid'}</option>
-                <option value="tehsil-advocate">{language === 'hi' ? '⚖️ तहसील / हाईकोर्ट वकील संपर्क' : '⚖️ Tehsil / High Court Advocate Match'}</option>
-                <option value="govt-kendra">{language === 'hi' ? '🏛️ जन सेवा केंद्र / खतौनी सहायता' : '🏛️ Govt Kendra & Land Records Help'}</option>
-                <option value="vendor-business">{language === 'hi' ? '🤝 विक्रेता एवं स्थानीय ग्राहक व्यापार' : '🤝 Vendor & Customer Business Connect'}</option>
-              </select>
-            </div>
-
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'आपका नाम *' : 'Your Name *'}</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="Ramesh Kumar"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold focus:border-sky-600 focus:outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'फ़ोन नंबर *' : 'Phone Number *'}</label>
-                <input
-                  type="tel"
-                  required
-                  placeholder="+91 98765 43210"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold focus:border-sky-600 focus:outline-none"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'विवरण या समस्या *' : 'Explain Your Need *'}</label>
-              <textarea
-                rows="2"
-                required
-                placeholder={language === 'hi' ? 'अपनी आवश्यकता लिखें...' : 'Describe what help or connection you need...'}
-                value={formData.details}
-                onChange={(e) => setFormData({ ...formData, details: e.target.value })}
-                className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold focus:border-sky-600 focus:outline-none"
-              ></textarea>
-            </div>
-
-            {/* Mediation Fee Lock */}
-            <div className="p-3 bg-amber-50 rounded-xl border border-amber-200">
-              <div className="flex items-start gap-2">
-                <Sparkles className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+            {!paymentStep ? (
+              <>
                 <div>
-                  <p className="text-[11px] font-bold text-amber-900">
-                    {language === 'hi' 
-                      ? 'विशेषज्ञ संपर्क हेतु ₹149 का मध्यस्थता शुल्क अनिवार्य है।' 
-                      : 'A ₹149 mediation fee is required to connect with experts.'}
-                  </p>
-                  <p className="text-[10px] text-amber-700 font-medium mt-0.5 leading-tight">
-                    {language === 'hi' 
-                      ? 'इस सुरक्षित शुल्क का भुगतान करने पर आपको तुरंत विशेषज्ञ का नंबर दे दिया जाएगा।' 
-                      : 'By paying this secure platform fee, you will instantly receive the direct contact details.'}
+                  <label className="block font-bold text-slate-700 mb-1">
+                    {language === 'hi' ? 'कनेक्शन प्रकार चुनें *' : 'Select Connection Needed *'}
+                  </label>
+                  <select
+                    value={formData.connectType}
+                    onChange={(e) => setFormData({ ...formData, connectType: e.target.value })}
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-bold focus:border-sky-600 focus:outline-none"
+                  >
+                    <option value="doctor-hospital">{language === 'hi' ? '🏥 डॉक्टर एवं अस्पताल दाखिला सहायता' : '🏥 Doctor & Hospital Admission Aid'}</option>
+                    <option value="tehsil-advocate">{language === 'hi' ? '⚖️ तहसील / हाईकोर्ट वकील संपर्क' : '⚖️ Tehsil / High Court Advocate Match'}</option>
+                    <option value="govt-kendra">{language === 'hi' ? '🏛️ जन सेवा केंद्र / खतौनी सहायता' : '🏛️ Govt Kendra & Land Records Help'}</option>
+                    <option value="vendor-business">{language === 'hi' ? '🤝 विक्रेता एवं स्थानीय ग्राहक व्यापार' : '🤝 Vendor & Customer Business Connect'}</option>
+                  </select>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'आपका नाम *' : 'Your Name *'}</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Ramesh Kumar"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold focus:border-sky-600 focus:outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'फ़ोन नंबर *' : 'Phone Number *'}</label>
+                    <input
+                      type="tel"
+                      required
+                      placeholder="+91 98765 43210"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold focus:border-sky-600 focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block font-bold text-slate-700 mb-1">{language === 'hi' ? 'विवरण या समस्या *' : 'Explain Your Need *'}</label>
+                  <textarea
+                    rows="2"
+                    required
+                    placeholder={language === 'hi' ? 'अपनी आवश्यकता लिखें...' : 'Describe what help or connection you need...'}
+                    value={formData.details}
+                    onChange={(e) => setFormData({ ...formData, details: e.target.value })}
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 font-semibold focus:border-sky-600 focus:outline-none"
+                  ></textarea>
+                </div>
+
+                {/* Mediation Fee Lock */}
+                <div className="p-3 bg-amber-50 rounded-xl border border-amber-200">
+                  <div className="flex items-start gap-2">
+                    <Sparkles className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-[11px] font-bold text-amber-900">
+                        {language === 'hi' 
+                          ? 'विशेषज्ञ संपर्क हेतु ₹149 का मध्यस्थता शुल्क अनिवार्य है।' 
+                          : 'A ₹149 mediation fee is required to connect with experts.'}
+                      </p>
+                      <p className="text-[10px] text-amber-700 font-medium mt-0.5 leading-tight">
+                        {language === 'hi' 
+                          ? 'इस सुरक्षित शुल्क का भुगतान करने पर आपको तुरंत विशेषज्ञ का नंबर दे दिया जाएगा।' 
+                          : 'By paying this secure platform fee, you will instantly receive the direct contact details.'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-xl text-xs flex items-center justify-center gap-2 shadow-md transition-all mt-2"
+                >
+                  <Handshake className="w-4 h-4 text-slate-950" />
+                  <span>{language === 'hi' ? '₹149 भरें और सीधा संपर्क प्राप्त करें' : 'Pay ₹149 & Connect Directly'}</span>
+                </button>
+              </>
+            ) : (
+              <div className="flex flex-col items-center justify-center space-y-4 py-2">
+                <div className="text-center">
+                  <h3 className="text-sm font-bold text-slate-800">
+                    {language === 'hi' ? 'पेमेंट स्कैन करें' : 'Scan to Pay'}
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-1">
+                    {language === 'hi' ? 'QR कोड स्कैन करके ₹149 का भुगतान करें।' : 'Scan the QR code and pay exactly ₹149.'}
                   </p>
                 </div>
-              </div>
-            </div>
 
-            <button
-              type="submit"
-              className="w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-xl text-xs flex items-center justify-center gap-2 shadow-md transition-all mt-2"
-            >
-              <Handshake className="w-4 h-4 text-slate-950" />
-              <span>{language === 'hi' ? '₹149 भरें और सीधा संपर्क प्राप्त करें' : 'Pay ₹149 & Connect Directly'}</span>
-            </button>
+                <div className="p-2 border-2 border-slate-200 rounded-xl bg-slate-50">
+                  <img src="/assets/payment-qr.jpg" alt="Payment QR Code" className="w-48 h-48 object-contain rounded-lg shadow-sm" />
+                </div>
+
+                <div className="w-full space-y-1">
+                  <label className="block font-bold text-slate-700">
+                    {language === 'hi' ? 'UTR / Transaction ID दर्ज करें *' : 'Enter UTR / Transaction ID *'}
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g., 315482390123"
+                    value={utrNumber}
+                    onChange={(e) => setUtrNumber(e.target.value)}
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:border-sky-600 focus:outline-none font-medium"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={utrNumber.length < 12}
+                  className="w-full py-3 bg-amber-500 hover:bg-amber-400 disabled:bg-amber-200 text-slate-950 font-extrabold rounded-xl text-xs flex items-center justify-center gap-2 shadow-md transition-all mt-2"
+                >
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>{language === 'hi' ? 'भुगतान विवरण जमा करें' : 'Submit Payment Details'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setPaymentStep(false)}
+                  className="text-xs text-slate-500 hover:text-slate-800 underline mt-2"
+                >
+                  {language === 'hi' ? 'वापस जाएं' : 'Go Back'}
+                </button>
+              </div>
+            )}
           </form>
         )}
 
